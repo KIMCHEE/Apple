@@ -1,0 +1,15 @@
+#!/bin/bash
+ 
+# script_logfileDirectory.sh
+# author: matt.lee@darkstarintegrations.com
+# authorized user: matthew.lee@barclayscapital.com
+ 
+# Log File Directory Location
+logDir="/Library/Logs/Barclays"
+ 
+# If Log File Directory Doesn't Exist, Make Directory
+if [ ! -d $logDir ] ; then
+mkdir $logDir
+else
+exit 0
+fi
