@@ -1,0 +1,7 @@
+#!/bin/sh
+ 
+# Bound AD Object
+# author: matt.lee@fox.com
+ 
+adObject=`dsconfigad -show | awk '/Computer Account/{print $NF}' | tr '[a-z]' '[A-Z]' | sed s/.$//`
+echo "<result>$adObject</result>"
