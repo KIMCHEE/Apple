@@ -1,0 +1,20 @@
+#!/bin/bash
+ 
+# script_checkCurrentUserRights.sh
+#
+# author: matthew.lee@barclayscapital.com
+ 
+# Current User
+loggedInUser=$(ls -l /dev/console | awk '{ print $3 }')
+# Test Output
+#echo $loggedInUser
+ 
+# Check Group Membership
+groupMembership=$(dseditgroup -o checkmember -m ${loggedInUser} admin | awk '/yes/ { print $1 }')
+# Test Output
+#echo $groupMembership
+ 
+# Pull Admin Users From API
+apiStatus=`curl -k -u username:password https://url:8443/JSSResource/usergroups/id/2 2>&1 | grep -o "<username>$loggedInUser</username>"`
+# Test Output
+# echo $apiStatus
