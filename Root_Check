@@ -1,0 +1,8 @@
+#!/bin/bash
+
+rootcheck () {
+if [ "`/usr/bin/whoami`" != "root" ] ; then
+  /bin/echo "script must be run as root"
+  exit 0
+fi
+}
