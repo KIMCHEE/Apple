@@ -1,0 +1,15 @@
+#!/bin/bash
+ 
+# script_checkLogfileDirectory.sh
+# author: matt.lee@darkstarintegrations.com
+# authorized user: matthew.lee@barclayscapital.com
+ 
+# Log File Directory Location
+logDir="/Library/Logs/Barclays"
+ 
+# If Log File Directory Doesn't Exist, Make Directory
+if [ ! -d $logDir ] ; then
+echo "<result>Not Installed</result>"
+else
+echo "<result>Installed</result>"
+fi
