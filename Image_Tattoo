@@ -1,0 +1,3 @@
+#!/bin/sh
+
+echo "<result>`cat /Library/Application\ Support/JAMF/Receipts/version_OS.txt`</result>"
