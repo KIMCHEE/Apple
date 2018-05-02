@@ -1,0 +1,12 @@
+#!/bin/sh
+ 
+# Java 7 Version Check
+# author: matt.lee@fox.com
+ 
+# Declaring Variables
+getversion7=`/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin/java -version 2>&1 | grep "Java(TM) SE Runtime" | awk '{print $6}' | sed 's/)//'`
+ 
+#Retrieving Java 7 Version
+if [ -z "$getversion7" ]; then echo "<result>Not Installed</result>"
+else echo "<result>$getversion7</result>"
+fi
