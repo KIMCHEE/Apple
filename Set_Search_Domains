@@ -1,0 +1,21 @@
+#!/bin/bash
+ 
+IFS=$' \t\n'
+ 
+# Manually specify the searchName entries (separated by space) to be added to each Ethernet port below, add/remove as needed
+# Manually specify the ports to ignore such as Bluetooth, FireWire, etc.  
+# Enter your own variables below=
+searchName="test"
+ignoreDevice="Bluetooth FireWire"
+deviceEdit=$( echo $ignoreDevice | sed 's/ /|/g' )
+ 
+IFS=$'\n'
+PortList=$(networksetup -listallhardwareports | grep "Device: en" -B 2 | grep "Hardware Port:" | cut -c 16-100 | egrep -v -e $deviceEdit)
+ 
+for i in $PortList ; do
+    echo "Setting Search Domains": $i
+    IFS=$' \t\n'
+    sudo networksetup -setsearchdomains "$i" ""$searchName"" 1>/dev/null
+done
+ 
+exit 0
