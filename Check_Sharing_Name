@@ -1,0 +1,26 @@
+#!/bin/sh
+ 
+# Extension Attribute Check Computer Name Based on Active Directory Bound Name
+# 0 = Name Does Not Match, 1 = Name Match
+ 
+# name: script_checkSharingNameAD.sh
+# author: matt.lee@darkstarintegrations.com
+# authorized user: matthew.lee@barclayscapital.com
+ 
+# Read Active Directory Object Bound
+adObject=`dsconfigad -show | awk '/Computer Account/{print $NF}' | tr '[a-z]' '[A-Z]' | sed s/.$//`
+# Uncomment To Test Command
+# echo $adObject
+ 
+# Read Local Computer Name
+sharingName=`scutil --get ComputerName`
+# Uncomment To Test Command
+# echo $sharingName
+ 
+# Verify Sharing Name and Change if Needed
+if [ "$adObject" != "$sharingName" ] ; then
+echo "<result>0</result>"
+echo "`date -u`: $loggedInUser - Computer Name Does Not Match" >> /Library/Logs/Barclays/computer.log
+else
+echo "<result>1</result>"
+fi
