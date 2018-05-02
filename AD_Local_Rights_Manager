@@ -34,4 +34,5 @@ else
 # If User is not in the AD  Group
 if [[ "$loggedInUser" != "$adGroup" && "$loggedInUser" == "$groupMembership" ]]; then
         dscl . delete /Groups/admin GroupMembership $loggedInUser
-        
+        echo "`date -u`: $loggedInUser - Local Admin Rights Revoked by _casperagent" >> /Library/Logs/Barclays/activeDirectory.log
+fi
