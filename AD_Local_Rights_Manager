@@ -1,0 +1,37 @@
+#!/bin/bash
+ 
+# Grant Local Admin Rights Based on Active Directory
+# name: script_adminManager.sh
+# author: matt.lee@darkstarintegrations.com 
+# authorized user: matthew.lee@barclayscapital.com
+ 
+# Get Logged In User
+loggedInUser=$(ls -l /dev/console | awk '{ print $3 }')
+# Test Output
+# echo $loggedInUser
+ 
+# Extract Username From Local Admin List
+groupMembership=`dscl localhost read /Local/Default/Groups/admin GroupMembership | tr " " "\n" | grep "$loggedInUser"`
+# Test Output
+# echo $groupMembership
+ 
+# CHNG0003608988 Approved
+adGroupName="BCUS_MacAdminUser"
+ 
+# Active Directory Domain
+adDomain="DRYROCK"
+ 
+# Verify Username Not Present Already In Active 
+adGroup=`dscl "/Active\ Directory/$adDomain/All\ Domains" -read /Groups/$adGroupName member | grep -o "$realname"`
+#Test Output
+# echo $adGroup
+ 
+# If User is in AD Admin Group but Not Local Admin
+if [[ "$loggedInUser" == "$adGroup" && "$loggedInUser" != "$groupMembership" ]]; then
+        dscl . append /Groups/admin GroupMembership $loggedInUser
+            echo "`date -u`: $loggedInUser - Local Admin Rights Granted by by _casperagent" >> /Library/Logs/Barclays/activeDirectory.log
+else
+# If User is not in the AD  Group
+if [[ "$loggedInUser" != "$adGroup" && "$loggedInUser" == "$groupMembership" ]]; then
+        dscl . delete /Groups/admin GroupMembership $loggedInUser
+        
