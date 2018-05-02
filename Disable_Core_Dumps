@@ -1,0 +1,20 @@
+#!/bin/sh
+ 
+# HARDCODED VALUE FOR "targetVolume" IS SET HERE
+targetVolume=""
+ 
+ 
+# CHECK TO SEE IF A VALUE WAS PASSED IN PARAMETER 1 AND, IF SO, ASSIGN TO "USERNAME"
+if [ "$1" != "" ] && [ "$targetVolume" == "" ];then
+    targetVolume=$1
+fi
+ 
+if [ "$targetVolume" == "/" ]; then
+    echo "Disabling Core Dumps..."
+    /bin/launchctl limit core 0
+else
+    echo "Error:  This script must be run directly on the booted volume you would like to target.  If this script is being run as part of the imaging process, please ensure that the script priority in the Casper Admin application is set to \"At Reboot\"."
+    exit 1
+fi
+ 
+exit 0;
