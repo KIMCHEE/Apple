@@ -1,0 +1,30 @@
+#!/bin/bash
+ 
+# script_checkCurrentUserRights.sh
+#
+# author: matthew.lee@barclayscapital.com
+#
+# This script will check the current logged in users rights. Logged in user name passed as variable
+# $loggedInUser, local group membership is checked using dseditgroup and checking the current logged
+# in users group membership in the group admin. Yes is returned if the user is an Admin and No is
+# returned if the user is a standard user. These results are stored in the variable #groupMembership.
+# The script will then compare the group membership to either yes or no which is hard coded. The 
+# resulting comparison is then echoed as either "Administrator" for "Yes" or "Standard" for "No".
+# This script can be used as an Extension Attribute or in conjunction with another script.
+ 
+# Current User
+loggedInUser=$(ls -l /dev/console | awk '{ print $3 }')
+# Test Output
+# echo $loggedInUser
+ 
+# Check Group Membership
+groupMembership=$(dseditgroup -o checkmember -m $loggedInUser admin | awk '/yes/ { print $1 }')
+# Test Output
+# echo $groupMembership
+ 
+# Script Contents
+if [[ ${groupMembership} == "yes" ]]; then
+    echo "<result>Administrator</result>"
+else
+    echo "<result>Standard</result>"
+fi
