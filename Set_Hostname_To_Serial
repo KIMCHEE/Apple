@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# NAME: Set Hostname
+# AUTHOR: matt.lee@zimperium.com
+# VERSION: 1.0.0
+# DATE: 03/27/2018
+
+# Fetching Serial Number
+serialNumber=`system_profiler SPHardwareDataType | awk '/Serial/ {print $4}'`
+# Setting Domain Name Variable 
+domain=".zimperium.com"
+
+# Setting Hostname to Serial Number
+scutil --set HostName $serialNumber$domain
