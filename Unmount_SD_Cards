@@ -1,0 +1,9 @@
+#!/bin/bash
+for (( ; ; )); do
+        sdMntPnt=`system_profiler SPStorageDataType | grep "Reader Media" -B 8 | grep "Mount Point" | awk '{ $1=$2=""; print $0 }' | sed 's/^[ \t]*//;s/[ \t]*$//'`
+            echo test
+            # If the variable is anything other than empty, unmount the volume. Otherwise, exit the script.
+            if [ "$sdMntPnt" != "" ]; then
+                umount -f "${sdMntPnt}"
+            fi
+done
