@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# NAME: Enable Apple Remote Desktop
+# AUTHOR: matt.lee@zimperium.com
+# DATE: 02/21/2018
+# VERSION: 1.0.0
+
+# DEFINE VARIABLES
+privs="$4"
+users="$5"
+
+# RUNNING COMMANDS
+/System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -activate -configure -allowAccessFor -specifiedUsers
+/System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -configure -users $users -access -on -privs $privs -clientopts -setmenuextra -menuextra no
+# LOGGING TO CONSOLE
+echo "`date -u` ---> Apple Remote Desktop Enabled" >> /Library/Logs/Zimperium/JSS/Security.log
