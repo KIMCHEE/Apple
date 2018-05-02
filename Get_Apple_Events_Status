@@ -1,0 +1,7 @@
+#!/bin/bash
+ 
+# Remote Apple Events Status
+# author: matthew.lee@barclayscapital.com
+ 
+status=`systemsetup -getremoteappleevents | sed 's/Remote Apple Events: //g'`
+echo "<result>$status</result>"
