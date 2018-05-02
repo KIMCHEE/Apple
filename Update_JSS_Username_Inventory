@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# NAME: Update Computer Inventory Username
+# AUTHOR: matt.lee@zimperium.com
+# DATE: 02/24/2018
+# VERSION: 1.0.0
+
+# LOGGED IN USERNAME/SHORTNAME
+loggedInUser=`defaults read /Library/Preferences/com.apple.loginwindow lastUserName`
+
+# DISPLAYING SHORTNAME
+if [ loggedInUser == "" ]; then
+	echo "<result>None</result>"
+else
+	# SUBMITTING TO JSS
+    sudo jamf recon -endUsername $loggedInUser
+fi
